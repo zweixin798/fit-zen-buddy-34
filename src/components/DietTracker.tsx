@@ -10,7 +10,6 @@ type Meal = {
   protein: number;
   carbs: number;
   fat: number;
-  image?: string;
 };
 
 const SAMPLE_MEALS: Meal[] = [
@@ -25,12 +24,7 @@ export default function DietTracker() {
   const [meals] = useState<Meal[]>(SAMPLE_MEALS);
 
   const totals = meals.reduce(
-    (acc, m) => ({
-      calories: acc.calories + m.calories,
-      protein: acc.protein + m.protein,
-      carbs: acc.carbs + m.carbs,
-      fat: acc.fat + m.fat,
-    }),
+    (acc, m) => ({ calories: acc.calories + m.calories, protein: acc.protein + m.protein, carbs: acc.carbs + m.carbs, fat: acc.fat + m.fat }),
     { calories: 0, protein: 0, carbs: 0, fat: 0 }
   );
 
@@ -39,29 +33,23 @@ export default function DietTracker() {
   return (
     <div className="space-y-5">
       {/* Calorie Ring */}
-      <div className="bg-card rounded-2xl p-5 border border-border">
+      <div className="bg-card rounded-2xl p-5 shadow-card border border-border">
         <div className="flex items-center gap-6">
           <div className="relative w-28 h-28">
             <svg className="w-full h-full -rotate-90" viewBox="0 0 100 100">
               <circle cx="50" cy="50" r="42" fill="none" stroke="hsl(var(--muted))" strokeWidth="8" />
-              <circle
-                cx="50" cy="50" r="42" fill="none"
-                stroke="hsl(var(--neon))"
-                strokeWidth="8"
-                strokeLinecap="round"
-                strokeDasharray={`${caloriePercent * 2.64} 264`}
-                className="transition-all duration-700"
-              />
+              <circle cx="50" cy="50" r="42" fill="none" stroke="hsl(var(--coral))" strokeWidth="8" strokeLinecap="round"
+                strokeDasharray={`${caloriePercent * 2.64} 264`} className="transition-all duration-700" />
             </svg>
             <div className="absolute inset-0 flex flex-col items-center justify-center">
-              <span className="text-2xl font-bold font-display text-neon">{totals.calories}</span>
+              <span className="text-2xl font-bold font-display text-coral">{totals.calories}</span>
               <span className="text-[10px] text-muted-foreground">/ {TARGET.calories} kcal</span>
             </div>
           </div>
           <div className="flex-1 space-y-2.5">
-            <MacroBar icon={<Beef className="w-3.5 h-3.5" />} label="蛋白质" current={totals.protein} target={TARGET.protein} unit="g" color="bg-red-400" />
-            <MacroBar icon={<Wheat className="w-3.5 h-3.5" />} label="碳水" current={totals.carbs} target={TARGET.carbs} unit="g" color="bg-amber-400" />
-            <MacroBar icon={<Droplets className="w-3.5 h-3.5" />} label="脂肪" current={totals.fat} target={TARGET.fat} unit="g" color="bg-blue-400" />
+            <MacroBar icon={<Beef className="w-3.5 h-3.5" />} label="蛋白质" current={totals.protein} target={TARGET.protein} unit="g" color="bg-coral" />
+            <MacroBar icon={<Wheat className="w-3.5 h-3.5" />} label="碳水" current={totals.carbs} target={TARGET.carbs} unit="g" color="bg-amber-brand" />
+            <MacroBar icon={<Droplets className="w-3.5 h-3.5" />} label="脂肪" current={totals.fat} target={TARGET.fat} unit="g" color="bg-sky-brand" />
           </div>
         </div>
       </div>
@@ -69,13 +57,13 @@ export default function DietTracker() {
       {/* AI Upload */}
       <motion.button
         whileTap={{ scale: 0.97 }}
-        className="w-full bg-card border border-dashed border-neon/40 rounded-xl p-4 flex items-center justify-center gap-3 hover:bg-elevated transition-colors"
+        className="w-full bg-card border-2 border-dashed border-coral/30 rounded-2xl p-4 flex items-center justify-center gap-3 hover:border-coral/50 transition-colors shadow-card"
       >
-        <div className="w-10 h-10 rounded-full gradient-neon flex items-center justify-center">
+        <div className="w-11 h-11 rounded-full gradient-warm flex items-center justify-center">
           <Camera className="w-5 h-5 text-primary-foreground" />
         </div>
         <div className="text-left">
-          <p className="text-sm font-medium">AI 拍照识别</p>
+          <p className="text-sm font-semibold">AI 拍照识别</p>
           <p className="text-xs text-muted-foreground">上传食物图片，一键计算热量</p>
         </div>
       </motion.button>
@@ -83,33 +71,27 @@ export default function DietTracker() {
       {/* Meal List */}
       <div>
         <div className="flex items-center justify-between mb-3">
-          <h2 className="text-lg font-display">今日饮食</h2>
-          <button className="w-8 h-8 rounded-lg bg-secondary flex items-center justify-center hover:bg-muted transition-colors">
+          <h2 className="text-lg font-display font-bold">今日饮食</h2>
+          <button className="w-8 h-8 rounded-xl bg-secondary flex items-center justify-center hover:bg-muted transition-colors shadow-card">
             <Plus className="w-4 h-4" />
           </button>
         </div>
         <div className="space-y-2">
           {meals.map((meal, i) => (
-            <motion.div
-              key={meal.id}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.05 }}
-              className="bg-card rounded-xl p-3 border border-border"
+            <motion.div key={meal.id} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }}
+              className="bg-card rounded-2xl p-3.5 shadow-card border border-border"
             >
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="font-medium text-sm">{meal.name}</p>
+                  <p className="font-semibold text-sm">{meal.name}</p>
                   <p className="text-xs text-muted-foreground mt-0.5">{meal.time}</p>
                 </div>
                 <div className="text-right">
-                  <div className="flex items-center gap-1 text-neon">
+                  <div className="flex items-center gap-1 text-coral">
                     <Flame className="w-3.5 h-3.5" />
                     <span className="font-bold text-sm font-display">{meal.calories}</span>
                   </div>
-                  <p className="text-[10px] text-muted-foreground">
-                    蛋白{meal.protein}g · 碳水{meal.carbs}g · 脂肪{meal.fat}g
-                  </p>
+                  <p className="text-[10px] text-muted-foreground">蛋白{meal.protein}g · 碳水{meal.carbs}g · 脂肪{meal.fat}g</p>
                 </div>
               </div>
             </motion.div>
@@ -127,10 +109,7 @@ function MacroBar({ icon, label, current, target, unit, color }: {
   return (
     <div>
       <div className="flex items-center justify-between text-xs mb-1">
-        <div className="flex items-center gap-1 text-muted-foreground">
-          {icon}
-          <span>{label}</span>
-        </div>
+        <div className="flex items-center gap-1 text-muted-foreground">{icon}<span>{label}</span></div>
         <span className="text-foreground font-medium">{current}/{target}{unit}</span>
       </div>
       <div className="h-1.5 bg-muted rounded-full overflow-hidden">

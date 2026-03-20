@@ -1,16 +1,18 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { CalendarDays, Dumbbell, Utensils, Users, Bell } from "lucide-react";
+import { CalendarDays, Dumbbell, Utensils, Users, User } from "lucide-react";
 import TrainingCalendar from "@/components/TrainingCalendar";
 import TrainingPlans from "@/components/TrainingPlans";
 import DietTracker from "@/components/DietTracker";
 import CommunityFeed from "@/components/CommunityFeed";
+import ProfilePage from "@/components/ProfilePage";
 
 const TABS = [
   { id: "calendar", label: "日程", icon: CalendarDays },
   { id: "plans", label: "训练", icon: Dumbbell },
   { id: "diet", label: "饮食", icon: Utensils },
   { id: "community", label: "社区", icon: Users },
+  { id: "profile", label: "我的", icon: User },
 ] as const;
 
 type TabId = (typeof TABS)[number]["id"];
@@ -23,14 +25,8 @@ export default function Index() {
       {/* Top Bar */}
       <header className="sticky top-0 z-40 bg-background/80 backdrop-blur-xl border-b border-border px-4 py-3">
         <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-xl font-display tracking-wider text-neon">FITLOG</h1>
-            <p className="text-[10px] text-muted-foreground -mt-0.5">你的私人训练伙伴</p>
-          </div>
-          <button className="relative w-9 h-9 rounded-full bg-secondary flex items-center justify-center hover:bg-muted transition-colors">
-            <Bell className="w-4.5 h-4.5 text-foreground" />
-            <span className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 bg-neon rounded-full border-2 border-background" />
-          </button>
+          <h1 className="text-xl font-display font-bold tracking-wide text-coral">FITLOG</h1>
+          <p className="text-xs text-muted-foreground">你的私人训练伙伴</p>
         </div>
       </header>
 
@@ -48,12 +44,13 @@ export default function Index() {
             {activeTab === "plans" && <TrainingPlans />}
             {activeTab === "diet" && <DietTracker />}
             {activeTab === "community" && <CommunityFeed />}
+            {activeTab === "profile" && <ProfilePage />}
           </motion.div>
         </AnimatePresence>
       </main>
 
       {/* Bottom Tab Bar */}
-      <nav className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-lg bg-card/90 backdrop-blur-xl border-t border-border z-50">
+      <nav className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-lg bg-card/95 backdrop-blur-xl border-t border-border z-50">
         <div className="flex">
           {TABS.map((tab) => {
             const Icon = tab.icon;
@@ -62,25 +59,23 @@ export default function Index() {
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className="flex-1 flex flex-col items-center py-2 relative"
+                className="flex-1 flex flex-col items-center py-2.5 relative"
               >
                 {isActive && (
                   <motion.div
                     layoutId="tab-indicator"
-                    className="absolute -top-px left-4 right-4 h-0.5 bg-neon rounded-full"
+                    className="absolute -top-px left-3 right-3 h-0.5 gradient-warm rounded-full"
                     transition={{ type: "spring", stiffness: 400, damping: 30 }}
                   />
                 )}
-                <Icon className={`w-5 h-5 transition-colors ${isActive ? "text-neon" : "text-muted-foreground"}`} />
-                <span className={`text-[10px] mt-0.5 transition-colors ${isActive ? "text-neon font-medium" : "text-muted-foreground"}`}>
+                <Icon className={`w-5 h-5 transition-colors ${isActive ? "text-coral" : "text-muted-foreground"}`} />
+                <span className={`text-[10px] mt-0.5 transition-colors ${isActive ? "text-coral font-semibold" : "text-muted-foreground"}`}>
                   {tab.label}
                 </span>
               </button>
             );
           })}
         </div>
-        {/* Safe area */}
-        <div className="h-safe-area-bottom" />
       </nav>
     </div>
   );
