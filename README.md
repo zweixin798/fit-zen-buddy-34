@@ -1,3 +1,3 @@
-# Welcome 
+# Welcome to your Lovable project
 
-TODO:fit—zen原型
+TODO: Document your project here
