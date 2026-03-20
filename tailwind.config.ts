@@ -14,7 +14,7 @@ export default {
     },
     extend: {
       fontFamily: {
-        display: ['Oswald', 'sans-serif'],
+        display: ['Outfit', 'sans-serif'],
         body: ['Inter', 'sans-serif'],
       },
       colors: {
@@ -51,8 +51,12 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        neon: "hsl(var(--neon))",
-        elevated: "hsl(var(--surface-elevated))",
+        coral: "hsl(var(--coral))",
+        "amber-brand": "hsl(var(--amber))",
+        "sky-brand": "hsl(var(--sky))",
+        mint: "hsl(var(--mint))",
+        lavender: "hsl(var(--lavender))",
+        "rose-brand": "hsl(var(--rose))",
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
@@ -78,15 +82,10 @@ export default {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
-        "pulse-neon": {
-          "0%, 100%": { opacity: "1" },
-          "50%": { opacity: "0.6" },
-        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-        "pulse-neon": "pulse-neon 2s ease-in-out infinite",
       },
     },
   },
