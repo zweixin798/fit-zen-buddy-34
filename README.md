@@ -1,3 +1,3 @@
-# Welcome to your Lovable project
+# Welcome to your fitlog
 
-TODO: Document your project here
+TODO: start your exercise today
